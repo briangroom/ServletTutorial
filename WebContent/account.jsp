@@ -16,6 +16,7 @@
 <body>
     <%
     Student student = (Student)session.getAttribute("student");
+    
      %>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -71,8 +72,13 @@
 	
 	<div class="row">
 		<div class="col-md-4">
-			<h2>My GPA </h2>
-			<p><% out.print(student.getGpa()); %></p>
+			<h2>My BMI </h2>
+			<p>
+			
+			<% if (session.getAttribute("bmi") != null) { %>
+   				 <p> <% out.print(session.getAttribute("bmi")); %></p>
+			<% } %>
+			</p> 
 				<!-- <p><a class="btn btn-default"href="GpaServlet" role="button">View  GPA </a></p>  -->
 		</div>
 		<div class="col-md-4">

@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,18 +32,25 @@ public class BmiServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// BMI page
+		HttpSession session = request.getSession(true);
+
 		String weight = request.getParameter("weight");
 		String height = request.getParameter("height");
-		
-		double bmi = 0;
-		bmi = ((Integer.parseInt(height)*.025)*(Integer.parseInt(height)*.025)/(Integer.parseInt(weight)*45));
-		
-		HttpSession session = request.getSession(true);
+		System.out.println("here..!!! "+weight+"height: "+height);
+        
+		double bmi =0;
+		try {
+			 bmi = ((Double.parseDouble(height)*.025)*(Double.parseDouble(height)*.025)/(Double.parseDouble(weight)*45));
+		}
+		catch(NumberFormatException ex) {
+			System.out.println("Error, must enter a number.");
+		}
+		System.out.println("BMI: "+bmi);
 		Student student = (Student)session.getAttribute("student");
-		
-		session.setAttribute("student",student);
-
+		session.setAttribute("student", student);
+		session.setAttribute("bmi", bmi);
 		RequestDispatcher rs = request.getRequestDispatcher("account.jsp");
 		rs.forward(request, response);
 
